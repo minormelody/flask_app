@@ -6,7 +6,7 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     return "Welcome to the Arithmetic Operations API!"
-
+#endpoints
 @app.route('/add', methods=['GET'])
 def add():
     try:
