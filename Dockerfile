@@ -4,14 +4,14 @@ FROM python:3.9-slim
 # Set the working directory
 WORKDIR /app
 
-# Copy the requirements file
-COPY flask_app/requirements.txt .
+# Install git and other dependencies
+RUN apt-get update && apt-get install -y git
 
-# Install dependencies
+# Clone the repository
+RUN git clone https://github.com/yourusername/your-repo.git .
+
+# Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
-
-# Copy the rest of the application code
-COPY flask_app/ .
 
 # Expose port 5000
 EXPOSE 5000
