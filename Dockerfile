@@ -1,22 +1,15 @@
-# Use the official Python image from the Docker Hub
+# Use the official Python image
 FROM python:3.9-slim
 
 # Set the working directory
 WORKDIR /app
 
-# Install git and other dependencies
+# Install git
 RUN apt-get update && apt-get install -y git
 
-# Install Python dependencies
-COPY requirements.txt requirements.txt
-RUN pip install -r requirements.txt
+# Install dependencies (assuming requirements.txt is in the repo)
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the entry point script into the container
-COPY entrypoint.sh /home/ubuntu/ep/entrypoint.sh
-RUN chmod +x /home/ubuntu/ep/entrypoint.sh
-
-# Expose the port on which the app will run
-EXPOSE 5000
-
-# Set the entry point script
-ENTRYPOINT ["/home/ubuntu/ep/entrypoint.sh"]
+# Command to clone the repo and run the Flask app
+CMD git clone https://github.com/yourusername/your-repo.git /app && cd /app && pip install -r requirements.txt && flask run --host=0.0.0.0
