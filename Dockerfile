@@ -7,9 +7,11 @@ WORKDIR /app
 # Install git
 RUN apt-get update && apt-get install -y git
 
-# Install dependencies (assuming requirements.txt is in the repo)
+# Copy requirements.txt to the container
 COPY requirements.txt .
+
+# Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Command to clone the repo and run the Flask app
-CMD git clone https://github.com/yourusername/your-repo.git /app && cd /app && pip install -r requirements.txt && flask run --host=0.0.0.0
+CMD git clone https://github.com/minormelody/flask_app.git /app && cd /app && pip install -r requirements.txt && flask run --host=0.0.0.0
