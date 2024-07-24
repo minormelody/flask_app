@@ -10,8 +10,14 @@ WORKDIR /app
 # Clone the GitHub repository
 RUN git clone https://github.com/minormelody/flask_app.git .
 
+# Print the contents of the working directory to verify
+RUN ls -l
+
+# Print the contents of requirements.txt to ensure it is correct
+RUN cat requirements.txt
+
 # Install dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt || (cat /root/.pip/pip.log && exit 1)
 
 # Expose port 5000
 EXPOSE 5000
