@@ -1,29 +1,25 @@
-# Use the official Python 3.9 slim image as the base image
+# Use an official Python runtime as a parent image
 FROM python:3.9-slim
 
-# Set the working directory in the container
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+# Set the working directory
 WORKDIR /app
 
-# Install necessary system packages and git
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-    git \
-    && rm -rf /var/lib/apt/lists/*
+# Copy the requirements file to the working directory
+COPY flask_app/requirements.txt /app/
 
-# Clone the repository from GitHub
-RUN git clone https://github.com/minormelody/flask_app.git /app
+# Install dependencies
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Install pip and set up pip to ensure the latest version
-RUN python -m pip install --upgrade pip
+# Copy the rest of the application code
+COPY flask_app /app/
 
-# Install Python dependencies from requirements.txt
-RUN pip install --no-cache-dir -r flask_app/requirements.txt || (cat /root/.pip/pip.log && exit 1)
-
-# Set environment variable for Flask
-ENV FLASK_APP=flask_app/app.py
-
-# Expose port 5000 for Flask
+# Expose port 5000
 EXPOSE 5000
 
-# Command to run the Flask application
-CMD ["flask", "run", "--host=0.0.0.0"]
+# Define the command to run the app
+CMD ["python", "app.py"]
+
