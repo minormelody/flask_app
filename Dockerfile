@@ -5,11 +5,11 @@ FROM python:3.9-slim
 WORKDIR /app
 
 # Copy the requirements file and install dependencies
-COPY flask_app/requirements.txt requirements.txt
+COPY requirements.txt requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the rest of the application code
-COPY flask_app/ .
+COPY . .
 
 # Set the environment variable for Flask
 ENV FLASK_APP=app.py
@@ -19,4 +19,3 @@ EXPOSE 5000
 
 # Command to run the Flask application
 CMD ["flask", "run", "--host=0.0.0.0", "--port=5000"]
-
