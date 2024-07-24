@@ -17,7 +17,7 @@ RUN ls -l
 RUN cat requirements.txt
 
 # Install dependencies
-RUN pip install --no-cache-dir -r requirements.txt || (cat /root/.pip/pip.log && exit 1)
+RUN pip install --no-cache-dir --force -r requirements.txt || (cat /root/.pip/pip.log && exit 1)
 
 # Expose port 5000
 EXPOSE 5000
